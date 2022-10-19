@@ -4,21 +4,11 @@ function quadratic (a: number, b: number, c: number) {
     } else if (b ** 2 - 4 * (a * c) == 0) {
         basic.showString("x = x2", 70)
     } else {
-        x = (b * -1 + (b ** 2 - 4 * (a * c)) ** 0.5) / (2 * a)
-        x2 = (b * -1 - (b ** 2 - 4 * (a * c)) ** 0.5) / (2 * a)
+        x = (b * -1 + Math.sqrt(b ** 2 - 4 * (a * c))) / (2 * a)
+        x2 = (b * -1 - Math.sqrt(b ** 2 - 4 * (a * c))) / (2 * a)
         basic.showString("x1=" + x + "x2" + x2)
     }
 }
-input.onButtonPressed(Button.A, function () {
-    if (state == 0) {
-        operation += 1
-        operation = operation % 3
-        basic.showString("" + (choice[operation]), 70)
-    } else if (state > 0) {
-        temp += 1
-        basic.showNumber(temp, 70)
-    }
-})
 function set_all_variables () {
     y = 0
     x = 0
@@ -34,47 +24,28 @@ function set_all_variables () {
     num4 = 0
     choice = ["find line", "quadratic", "intersection"]
 }
+input.onButtonPressed(Button.B, function () {
+    if (state > 0) {
+        temp += -1
+        basic.showNumber(temp, 70)
+    }
+})
 function point_of_intersection (a: number, b: number, c: number, d: number) {
     if (a == c) {
         basic.showString("IMPOSSIBLE")
     } else {
-        x = d - b + (a - c)
+        x = (d - b) / (a - c)
         y = a * x + b
-        basic.showString("(" + y + ", " + x + ")")
+        basic.showString("(" + x + ", " + y + ")")
     }
 }
-input.onButtonPressed(Button.AB, function () {
+input.onButtonPressed(Button.A, function () {
     if (state == 0) {
-        change_state()
-        basic.showString("num1", 70)
-    } else if (state == 1) {
-        num1 = temp
-        change_state()
-        basic.showString("num2", 70)
-    } else if (state == 2) {
-        num2 = temp
-        change_state()
-        basic.showString("num3", 70)
-    } else if (state == 3) {
-        num3 = temp
-        change_state()
-        basic.showString("num4", 70)
-    } else if (state == 4) {
-        num4 = temp
-        change_state()
-        if (operation == 0) {
-            eq_of_line(num1, num2, num3, num4)
-        } else if (operation == 1) {
-            quadratic(num1, num2, num3)
-        } else if (operation == 2) {
-            point_of_intersection(num1, num2, num3, num4)
-        }
-        control.reset()
-    }
-})
-input.onButtonPressed(Button.B, function () {
-    if (state > 0) {
-        temp += -1
+        operation += 1
+        operation = operation % 3
+        basic.showString("" + (choice[operation]), 70)
+    } else if (state > 0) {
+        temp += 1
         basic.showNumber(temp, 70)
     }
 })
@@ -95,14 +66,46 @@ function change_state () {
     state += 1
     temp = 0
 }
+input.onButtonPressed(Button.AB, function () {
+    if (state == 0) {
+        change_state()
+        basic.showString("num1", 70)
+    } else if (state == 1) {
+        num1 = temp
+        change_state()
+        basic.showString("num2", 70)
+    } else if (state == 2) {
+        num2 = temp
+        change_state()
+        basic.showString("num3", 70)
+    } else if (state == 3) {
+        num3 = temp
+        if (operation == 1) {
+            quadratic(num1, num2, num3)
+            control.reset()
+        } else {
+            change_state()
+            basic.showString("num4", 70)
+        }
+    } else if (state == 4) {
+        num4 = temp
+        change_state()
+        if (operation == 0) {
+            eq_of_line(num1, num2, num3, num4)
+        } else if (operation == 2) {
+            point_of_intersection(num1, num2, num3, num4)
+        }
+        control.reset()
+    }
+})
 let num4 = 0
 let num3 = 0
 let num2 = 0
 let num1 = 0
+let state = 0
 let m = 0
 let b = 0
 let y = 0
-let state = 0
 let x2 = 0
 let x = 0
 let temp = 0
