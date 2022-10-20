@@ -6,7 +6,7 @@ function quadratic (a: number, b: number, c: number) {
     } else {
         x = (b * -1 + Math.sqrt(b ** 2 - 4 * (a * c))) / (2 * a)
         x2 = (b * -1 - Math.sqrt(b ** 2 - 4 * (a * c))) / (2 * a)
-        basic.showString("x1=" + x + "x2" + x2)
+        basic.showString("x1=" + x + "x2=" + x2)
     }
 }
 function set_all_variables () {
@@ -108,7 +108,8 @@ let b = 0
 let y = 0
 let x2 = 0
 let x = 0
-let temp = 0
-let operation = 0
 let choice: string[] = []
+let operation = 0
+let temp = 0
+basic.showString("Choose operation",70)
 set_all_variables()
