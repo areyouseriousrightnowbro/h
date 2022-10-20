@@ -24,12 +24,6 @@ function set_all_variables () {
     num4 = 0
     choice = ["find line", "quadratic", "intersection"]
 }
-input.onButtonPressed(Button.B, function () {
-    if (state > 0) {
-        temp += -1
-        basic.showNumber(temp, 70)
-    }
-})
 function point_of_intersection (a: number, b: number, c: number, d: number) {
     if (a == c) {
         basic.showString("IMPOSSIBLE")
@@ -46,6 +40,12 @@ input.onButtonPressed(Button.A, function () {
         basic.showString("" + (choice[operation]), 70)
     } else if (state > 0) {
         temp += 1
+        basic.showNumber(temp, 70)
+    }
+})
+input.onButtonPressed(Button.B, function () {
+    if (state > 0) {
+        temp += -1
         basic.showNumber(temp, 70)
     }
 })
@@ -98,6 +98,11 @@ input.onButtonPressed(Button.AB, function () {
         control.reset()
     }
 })
+// A = change operation, and increase variable.
+// 
+// B = decrease variable.
+// 
+// A + B = save variable.
 let num4 = 0
 let num3 = 0
 let num2 = 0
